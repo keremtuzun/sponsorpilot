@@ -77,7 +77,7 @@ export default function SupportWidget() {
         </div>
       )}
       <button className="support-fab" onClick={() => setOpen((o) => !o)} aria-label="Open support chat">
-        {open ? "✕" : "💬"}
+        {open ? "Close" : "Help"}
       </button>
     </div>
   );

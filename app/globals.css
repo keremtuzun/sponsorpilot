@@ -917,6 +917,17 @@ footer {
   background: var(--surface);
 }
 
+.support-fab {
+  width: auto;
+  min-width: 64px;
+  padding: 0 16px;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
