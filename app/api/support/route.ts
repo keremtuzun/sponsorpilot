@@ -25,7 +25,7 @@ const SYSTEM = `You are the support agent for SponsorPilot, the AI sponsorship b
 
 PRODUCT FACTS
 - SponsorPilot is an AI broker for student orgs, clubs, and small event organizers: it researches matching sponsors, estimates deal sizes, writes the pitch emails, negotiates counter-offers against the organizer's floor price, and drafts the sponsorship agreement.
-- Pricing: completely free for organizers while in beta. SponsorPilot never touches the money — sponsors pay the organizer's organization directly under the terms in the agreement.
+- Pricing: completely free for organizers while in beta. SponsorPilot never touches the money - sponsors pay the organizer's organization directly under the terms in the agreement.
 - Campaign generation takes ~30 seconds. Campaigns are stored in the browser session for now (accounts and saved campaigns are coming); organizers can relist an event anytime for free.
 - The organizer always approves before anything is sent: the agent drafts and decides, the organizer clicks send. The agent never accepts a deal below the organizer's floor price.
 
@@ -37,7 +37,7 @@ DECISION AUTHORITY
 const DEMO_REPLY = {
   demoMode: true,
   reply:
-    "Hi! I'm SponsorPilot's AI support agent. Listing your event and running the broker campaign is completely free while we're in beta — and sponsors pay your organization directly, we never touch the money. Anything else I can help with?",
+    "Hi! I'm SponsorPilot's AI support agent. Listing your event and running the broker campaign is completely free while we're in beta - and sponsors pay your organization directly, we never touch the money. Anything else I can help with?",
   action: "answer",
 };
 
@@ -72,6 +72,6 @@ export async function POST(req: Request) {
     return NextResponse.json(result);
   } catch (err) {
     console.error("[sponsorpilot:support] failed", err);
-    return NextResponse.json({ reply: "Sorry — I hit a snag. Please try again in a moment.", action: "answer" }, { status: 200 });
+    return NextResponse.json({ reply: "Sorry - I hit a snag. Please try again in a moment.", action: "answer" }, { status: 200 });
   }
 }

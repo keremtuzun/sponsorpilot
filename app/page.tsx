@@ -24,7 +24,7 @@ const EMPTY: IntakeForm = {
 
 const STEPS = [
   {
-    title: "List your event — free",
+    title: "List your event - free",
     desc: "3 minutes: who's coming, what you can offer sponsors, and your floor price. That's the last work you do.",
   },
   {
@@ -93,7 +93,7 @@ export default function Home() {
       sessionStorage.setItem("sponsorpilot_form", JSON.stringify(form));
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong — please try again.");
+      setError(err instanceof Error ? err.message : "Something went wrong - please try again.");
       setLoading(false);
     }
   }
@@ -106,7 +106,7 @@ export default function Home() {
             Sponsor<span>Pilot</span>
           </div>
           <a className="cta-small" href="#start">
-            List my event — free
+            List my event - free
           </a>
         </nav>
 
@@ -119,7 +119,7 @@ export default function Home() {
               </h1>
               <p className="sub rise d2">
                 It researches the sponsors, writes the pitches, negotiates the deals, and drafts the
-                contracts — like an agent that works for you. Every deal it closes is yours: sponsors
+                contracts - like an agent that works for you. Every deal it closes is yours: sponsors
                 pay your organization directly.
               </p>
               <div className="rise d3">
@@ -282,7 +282,7 @@ export default function Home() {
 
       <footer>
         <div className="container">
-          SponsorPilot — the AI sponsorship broker. Free for organizers. Powered by Gemini.
+          SponsorPilot - the AI sponsorship broker. Free for organizers. Powered by Gemini.
         </div>
       </footer>
     </>
