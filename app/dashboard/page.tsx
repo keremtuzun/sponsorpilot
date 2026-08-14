@@ -19,7 +19,7 @@ function parseAmount(s: string | undefined): number {
 }
 
 /** Review-and-send panel: the agent drafted it, the human approves, the agent
- *  sends — from the organizer's OWN Gmail. Credentials live in this browser's
+ *  sends - from the organizer's OWN Gmail. Credentials live in this browser's
  *  localStorage and travel only with each send request; the server keeps nothing. */
 function SendPanel({
   defaultTo,
@@ -88,7 +88,7 @@ function SendPanel({
       }
       onSent(to);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sending failed — try again.");
+      setError(err instanceof Error ? err.message : "Sending failed - try again.");
     } finally {
       setBusy(false);
     }
@@ -103,11 +103,11 @@ function SendPanel({
 
   return (
     <div className="send-panel">
-      <div className="send-head">Review before it goes out — edit anything, replace [Name], then approve.</div>
+      <div className="send-head">Review before it goes out - edit anything, replace [Name], then approve.</div>
 
       {editFrom ? (
         <div className="send-setup" style={{ marginBottom: 16 }}>
-          <strong>Sending account</strong> — the broker sends from your own Gmail using an App Password (a special
+          <strong>Sending account</strong> - the broker sends from your own Gmail using an App Password (a special
           16-character password just for apps; your real password never touches SponsorPilot). It stays in this
           browser only.
           <details className="pw-help">
@@ -127,10 +127,10 @@ function SendPanel({
                 (or search &quot;app passwords&quot; in your Google Account)
               </li>
               <li>Type a name like &quot;SponsorPilot&quot; and click <em>Create</em></li>
-              <li>Google shows a 16-character password — copy it and paste it below (spaces are fine)</li>
+              <li>Google shows a 16-character password - copy it and paste it below (spaces are fine)</li>
             </ol>
             <p>
-              Note: school or company Google accounts often have App Passwords disabled by the administrator — use a
+              Note: school or company Google accounts often have App Passwords disabled by the administrator - use a
               personal Gmail if the page says it&apos;s unavailable. You can revoke the password anytime from the same
               page.
             </p>
@@ -207,7 +207,7 @@ export default function Dashboard() {
       if (c) setCampaign(JSON.parse(c));
       if (f) setForm(JSON.parse(f));
     } catch {
-      /* corrupted storage — show empty state */
+      /* corrupted storage - show empty state */
     }
   }, []);
 
@@ -264,7 +264,7 @@ export default function Dashboard() {
         updateProspect(negotiatingIdx, { stage: "negotiating" });
       }
     } catch (err) {
-      setNegoError(err instanceof Error ? err.message : "Negotiation failed — try again.");
+      setNegoError(err instanceof Error ? err.message : "Negotiation failed - try again.");
     } finally {
       setNegoBusy(false);
     }
@@ -292,9 +292,9 @@ export default function Dashboard() {
         </nav>
         <section className="hero">
           <h1>No campaign yet</h1>
-          <p className="sub">List your event first — your AI broker will build the campaign in ~30 seconds.</p>
+          <p className="sub">List your event first - your AI broker will build the campaign in ~30 seconds.</p>
           <Link className="cta" href="/">
-            List my event — free
+            List my event - free
           </Link>
         </section>
       </div>
@@ -319,10 +319,10 @@ export default function Dashboard() {
         <header className="kit-header">
           {campaign.demoMode && (
             <div className="demo-banner">
-              Demo mode — set GEMINI_API_KEY for live Gemini brokerage. This is a sample campaign.
+              Demo mode - set GEMINI_API_KEY for live Gemini brokerage. This is a sample campaign.
             </div>
           )}
-          <h1>{form.eventName} — Broker Dashboard</h1>
+          <h1>{form.eventName} - Broker Dashboard</h1>
           <p className="tagline">{campaign.deck.tagline}</p>
           <p className="pitch">{campaign.strategy.positioning}</p>
         </header>
@@ -358,7 +358,7 @@ export default function Dashboard() {
             </ul>
             <h4 style={{ marginTop: 16 }}>Packages the broker is selling</h4>
             <p>
-              {campaign.tiers.map((t) => `${t.name} — ${t.price}`).join("  ·  ")}{" "}
+              {campaign.tiers.map((t) => `${t.name} - ${t.price}`).join("  ·  ")}{" "}
               <button className="copy-btn" style={{ marginLeft: 8 }} onClick={() => setShowDeck((s) => !s)}>
                 {showDeck ? "Hide deck" : "View partnership deck"}
               </button>
@@ -466,7 +466,7 @@ export default function Dashboard() {
                     <li key={i}>{d}</li>
                   ))}
                 </ul>
-                <h4>Reply — approve to send</h4>
+                <h4>Reply - approve to send</h4>
                 {negoReplySent ? (
                   <p className="closed-line">✓ Reply sent to {negoReplySent}</p>
                 ) : showNegoSend ? (
@@ -485,7 +485,7 @@ export default function Dashboard() {
                 )}
                 {negoResult.agreement && (
                   <>
-                    <h4>Sponsorship agreement — auto-drafted</h4>
+                    <h4>Sponsorship agreement - auto-drafted</h4>
                     <div className="email-card agreement" style={{ marginBottom: 0 }}>
                       <pre>{negoResult.agreement}</pre>
                       <button className="copy-btn" onClick={() => copy("agreement", negoResult.agreement!)}>
@@ -511,7 +511,7 @@ export default function Dashboard() {
       </div>
 
       <footer>
-        <div className="container">SponsorPilot — the AI sponsorship broker. Powered by Gemini.</div>
+        <div className="container">SponsorPilot - the AI sponsorship broker. Powered by Gemini.</div>
       </footer>
     </>
   );
@@ -553,7 +553,7 @@ function ProspectCard({
       )}
       {p.stage === "closed" && p.closedAmount && (
         <p className="closed-line">
-          Closed at <strong>{p.closedAmount}</strong> — agreement drafted, sponsor pays your organization directly.
+          Closed at <strong>{p.closedAmount}</strong> - agreement drafted, sponsor pays your organization directly.
         </p>
       )}
       <div className="deal-actions">

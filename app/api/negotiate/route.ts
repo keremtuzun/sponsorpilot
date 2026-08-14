@@ -43,7 +43,7 @@ const negotiationSchema = {
     agreement: {
       type: Type.STRING,
       description:
-        "ONLY when decision=accept: the full plain-text sponsorship agreement (parties, package, deliverables, payment terms — sponsor pays the Organizer directly — cancellation, content approval, signature lines). Otherwise an empty string.",
+        "ONLY when decision=accept: the full plain-text sponsorship agreement (parties, package, deliverables, payment terms - sponsor pays the Organizer directly - cancellation, content approval, signature lines). Otherwise an empty string.",
     },
   },
   required: ["analysis", "decision", "proposedTerms", "replyEmail", "agreement"],
@@ -82,10 +82,10 @@ export async function POST(req: Request) {
         ...DEMO_NEGOTIATION,
         decision: "accept",
         analysis:
-          "The sponsor has accepted the counter-offer at ₺40,000 with category exclusivity — above the organizer's floor and within tier economics. Closing now: confirmation email plus the agreement for signature.",
+          "The sponsor has accepted the counter-offer at ₺40,000 with category exclusivity - above the organizer's floor and within tier economics. Closing now: confirmation email plus the agreement for signature.",
         replyEmail: {
-          subject: "Confirmed — HackTheCity Istanbul Track Partnership (exclusive)",
-          body: "Hi [Name],\n\nExcellent — you're confirmed as the exclusive telco partner of HackTheCity Istanbul at ₺40,000.\n\nI've attached the sponsorship agreement for signature; payment goes directly to the organizing team per the terms inside. Deliverables kick off immediately after: we'll request your logo pack and API-track brief this week.\n\nWelcome aboard — this is going to perform.\n\nBest,\nSponsorPilot Broker, on behalf of HackTheCity",
+          subject: "Confirmed - HackTheCity Istanbul Track Partnership (exclusive)",
+          body: "Hi [Name],\n\nExcellent - you're confirmed as the exclusive telco partner of HackTheCity Istanbul at ₺40,000.\n\nI've attached the sponsorship agreement for signature; payment goes directly to the organizing team per the terms inside. Deliverables kick off immediately after: we'll request your logo pack and API-track brief this week.\n\nWelcome aboard - this is going to perform.\n\nBest,\nSponsorPilot Broker, on behalf of HackTheCity",
         },
         agreement: DEMO_AGREEMENT,
       } satisfies NegotiationResult);
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ...DEMO_NEGOTIATION, agreement: "" });
   }
 
-  const prompt = `You are SponsorPilot's autonomous negotiation agent, brokering sponsorship deals on behalf of event organizers. Your incentive is to CLOSE at the best defensible price — not to be polite and lose the deal, and not to overreach and kill it.
+  const prompt = `You are SponsorPilot's autonomous negotiation agent, brokering sponsorship deals on behalf of event organizers. Your incentive is to CLOSE at the best defensible price - not to be polite and lose the deal, and not to overreach and kill it.
 
 DEAL CONTEXT
 - Event: ${body.eventName}, organized by ${body.orgName}
@@ -113,10 +113,10 @@ YOUR MOVE
 1. Analyze their position: budget signals, leverage, what they actually want.
 2. Decide: counter / accept / decline / escalate.
    - accept only at or above the floor.
-   - Non-monetary asks (exclusivity, extra deliverables, speaking slots) are pricing levers — charge for them.
+   - Non-monetary asks (exclusivity, extra deliverables, speaking slots) are pricing levers - charge for them.
    - escalate when the sponsor requests things only the organizer can approve (program changes, unusual legal terms).
 3. Draft the reply email (broker voice: confident, concrete, deadline-driven; under 160 words; sign as "SponsorPilot Broker, on behalf of ${body.orgName}").
-4. If accepting: write the complete plain-text sponsorship agreement — payment is made directly to the Organizer's bank account within 14 days of signature. If not accepting, agreement must be an empty string.`;
+4. If accepting: write the complete plain-text sponsorship agreement - payment is made directly to the Organizer's bank account within 14 days of signature. If not accepting, agreement must be an empty string.`;
 
   try {
     const ai = new GoogleGenAI({ apiKey });
@@ -131,6 +131,6 @@ YOUR MOVE
     return NextResponse.json(result);
   } catch (err) {
     console.error("[sponsorpilot:negotiate] failed", err);
-    return NextResponse.json({ error: "Negotiation agent failed — please try again." }, { status: 502 });
+    return NextResponse.json({ error: "Negotiation agent failed - please try again." }, { status: 502 });
   }
 }
