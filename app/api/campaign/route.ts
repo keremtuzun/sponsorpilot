@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { DEMO_CAMPAIGN } from "@/lib/demo";
 import { env } from "@/lib/env";
+import { STYLE_RULES } from "@/lib/style";
 import { generateResilient } from "@/lib/gemini";
 import type { Campaign, IntakeForm } from "@/lib/types";
 
@@ -92,7 +93,7 @@ RULES
 - estDealSize must be plausible for that company and this audience size; tier prices must sum plausibly toward the goal across several sponsors.
 - Emails: sharp broker tone, lead with what the sponsor gets, mention a concrete price anchor, under 130 words, sign as "SponsorPilot Broker, on behalf of ${f.orgName}". Use [Name] for the recipient.
 - Never invent statistics; only reframe the numbers given.
-- Write in English unless the listing is clearly in another language.`;
+- Write in English unless the listing is clearly in another language.${STYLE_RULES}`;
 }
 
 export async function POST(req: Request) {
@@ -121,7 +122,14 @@ export async function POST(req: Request) {
     });
 
     const campaign = JSON.parse(response.text ?? "") as Campaign;
-    campaign.prospects = campaign.prospects.map((p) => ({ ...p, stage: "researched" as const }));
+    const PUBLIC_BODY = /municipalit|belediye|ministry|bakanl|m[üu]d[üu]rl[üu][ğg]|governor|valilik|\bMEB\b|\bİBB\b|\bIBB\b/i;
+    campaign.prospects = campaign.prospects
+      .filter((p) => !PUBLIC_BODY.test(`${p.company} ${p.category}`))
+      .map((p) => ({
+        ...p,
+        outreachBody: p.outreachBody.replace(/\s*(SponsorPilot Broker, on behalf of)/, "\n\n$1"),
+        stage: "researched" as const,
+      }));
     console.log(
       `[sponsorpilot:broker] campaign created event="${form.eventName}" country="${form.country}" prospects=${campaign.prospects.length} projected="${campaign.strategy.projectedRaise}"`
     );

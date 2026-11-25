@@ -10,7 +10,7 @@ interface Msg {
 export default function SupportWidget() {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: "agent", text: "Hi! I'm SponsorPilot's AI support agent, ask me anything about campaigns, negotiations, or deals. How can I help?" },
+    { role: "agent", text: "This is SponsorPilot's AI support agent. Ask about how campaigns, negotiation or sending work." },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -49,10 +49,10 @@ export default function SupportWidget() {
           <div className="support-head">
             <div>
               <strong>Support</strong>
-              <div className="support-sub">AI agent · replies in seconds</div>
+              <div className="support-sub">Answered by an AI agent</div>
             </div>
             <button className="support-close" onClick={() => setOpen(false)} aria-label="Close chat">
-              ✕
+              Close
             </button>
           </div>
           <div className="support-body" ref={bodyRef}>
@@ -77,7 +77,7 @@ export default function SupportWidget() {
         </div>
       )}
       <button className="support-fab" onClick={() => setOpen((o) => !o)} aria-label="Open support chat">
-        {open ? "✕" : "💬"}
+        {open ? "Close" : "Ask a question"}
       </button>
     </div>
   );

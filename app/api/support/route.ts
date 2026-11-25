@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { env } from "@/lib/env";
+import { STYLE_RULES } from "@/lib/style";
 import { generateResilient } from "@/lib/gemini";
 
 export const maxDuration = 30;
@@ -64,7 +65,7 @@ export async function POST(req: Request) {
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await generateResilient(ai, {
-      contents: `${SYSTEM}\n\nCONVERSATION SO FAR\n${transcript}\n\nRespond to the customer's last message.`,
+      contents: `${SYSTEM}\n\nCONVERSATION SO FAR\n${transcript}\n\nRespond to the customer's last message.\n${STYLE_RULES}`,
       config: { responseMimeType: "application/json", responseSchema: supportSchema, temperature: 0.5 },
     });
     const result = JSON.parse(response.text ?? "");

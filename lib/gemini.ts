@@ -23,7 +23,11 @@ export async function generateResilient(
       return await ai.models.generateContent({
         model: plan[i],
         contents: params.contents,
-        config: { ...params.config, abortSignal: controller.signal },
+        config: {
+          ...params.config,
+          ...(/2\.5/.test(plan[i]) ? { thinkingConfig: { thinkingBudget: 0 } } : {}),
+          abortSignal: controller.signal,
+        },
       });
     } catch (e) {
       lastErr = e;

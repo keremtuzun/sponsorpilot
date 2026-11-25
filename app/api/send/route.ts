@@ -37,9 +37,9 @@ export async function POST(req: Request) {
   if (!data.subject?.trim() || !data.body?.trim()) {
     return NextResponse.json({ error: "Subject and body are required" }, { status: 400 });
   }
-  if (/\[Name\]|\[Contact/i.test(data.body)) {
+  if (/\[[^\]\n]{2,40}\]/.test(data.body)) {
     return NextResponse.json(
-      { error: "The draft still contains a [Name] placeholder. Replace it with the recipient's name before sending." },
+      { error: "The draft still contains a bracketed placeholder such as [Name]. Replace it before sending." },
       { status: 400 }
     );
   }

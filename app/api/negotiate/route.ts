@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { DEMO_AGREEMENT, DEMO_NEGOTIATION } from "@/lib/demo";
 import { env } from "@/lib/env";
+import { STYLE_RULES } from "@/lib/style";
 import { generateResilient } from "@/lib/gemini";
 import type { NegotiationResult } from "@/lib/types";
 
@@ -116,7 +117,8 @@ YOUR MOVE
    - Non-monetary asks (exclusivity, extra deliverables, speaking slots) are pricing levers, charge for them.
    - escalate when the sponsor requests things only the organizer can approve (program changes, unusual legal terms).
 3. Draft the reply email (broker voice: confident, concrete, deadline-driven; under 160 words; sign as "SponsorPilot Broker, on behalf of ${body.orgName}").
-4. If accepting: write the complete plain-text sponsorship agreement, payment is made directly to the Organizer's bank account within 14 days of signature. If not accepting, agreement must be an empty string.`;
+4. If accepting: write the complete plain-text sponsorship agreement, payment is made directly to the Organizer's bank account within 14 days of signature. If not accepting, agreement must be an empty string.
+${STYLE_RULES}`;
 
   try {
     const ai = new GoogleGenAI({ apiKey });

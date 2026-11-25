@@ -8,7 +8,7 @@ const STAGES: { id: Stage; label: string }[] = [
   { id: "researched", label: "Researched" },
   { id: "contacted", label: "Pitched" },
   { id: "negotiating", label: "Negotiating" },
-  { id: "closed", label: "Closed ✓" },
+  { id: "closed", label: "Closed" },
   { id: "declined", label: "Passed" },
 ];
 
@@ -173,13 +173,13 @@ function SendPanel({
       </div>
       <div className="deal-actions">
         <button className="copy-btn primary-btn" onClick={send} disabled={busy || !to.trim()}>
-          {busy ? "Sending…" : "Approve & send ✈"}
+          {busy ? "Sending…" : "Approve and send"}
         </button>
         <button className="copy-btn" onClick={onCancel} disabled={busy}>
           Cancel
         </button>
         <button className="copy-btn" onClick={copyDraft}>
-          {copied ? "Copied ✓" : "Copy instead"}
+          {copied ? "Copied" : "Copy instead"}
         </button>
       </div>
       {error && <div className="error-msg" style={{ textAlign: "left" }}>{error}</div>}
@@ -311,9 +311,7 @@ export default function Dashboard() {
           <Link href="/" className="logo" style={{ textDecoration: "none", color: "inherit" }}>
             Sponsor<span>Pilot</span>
           </Link>
-          <span className="badge" style={{ marginBottom: 0 }}>
-            Broker campaign · live
-          </span>
+          <span className="cat">Campaign</span>
         </nav>
 
         <header className="kit-header">
@@ -322,7 +320,7 @@ export default function Dashboard() {
               Demo mode: set GEMINI_API_KEY for live Gemini brokerage. This is a sample campaign.
             </div>
           )}
-          <h1>{form.eventName}: Broker Dashboard</h1>
+          <h1>{form.eventName}</h1>
           <p className="tagline">{campaign.deck.tagline}</p>
           <p className="pitch">{campaign.strategy.positioning}</p>
         </header>
@@ -348,7 +346,7 @@ export default function Dashboard() {
 
         <section className="kit-section">
           <h2>
-            Broker strategy <span className="tag">how your agent will run this</span>
+            Strategy <span className="tag">how the campaign is pitched</span>
           </h2>
           <div className="deck-card">
             <ul>
@@ -412,7 +410,7 @@ export default function Dashboard() {
 
         <section className="kit-section" id="nego-console">
           <h2>
-            Negotiation console <span className="tag">the agent closes, you approve</span>
+            Negotiation <span className="tag">the agent drafts, you approve</span>
           </h2>
           <div className="nego-card">
             {negotiatingIdx === null || !negoProspect ? (
@@ -437,7 +435,7 @@ export default function Dashboard() {
                   placeholder={`Paste ${negoProspect.company}'s reply here…\n\ne.g. "Thanks for reaching out. We like the audience but our budget for this is 30,000. We'd also want to be the only telco at the event. Need an answer this month."`}
                 />
                 <button className="submit-btn" style={{ marginTop: 4 }} onClick={negotiate} disabled={negoBusy || !sponsorMsg.trim()}>
-                  {negoBusy ? "Agent is negotiating…" : "Let the agent negotiate →"}
+                  {negoBusy ? "Agent is negotiating…" : "Negotiate this reply"}
                 </button>
                 {negoBusy && (
                   <div className="gen-status">
@@ -452,10 +450,10 @@ export default function Dashboard() {
             {negoResult && negoProspect && (
               <div className="nego-result">
                 <div className={`decision-badge ${negoResult.decision}`}>
-                  {negoResult.decision === "counter" && "↩ Counter-offer"}
-                  {negoResult.decision === "accept" && "✓ Deal closed"}
-                  {negoResult.decision === "decline" && "✕ Walk away"}
-                  {negoResult.decision === "escalate" && "⚠ Needs your call"}
+                  {negoResult.decision === "counter" && "Counter-offer"}
+                  {negoResult.decision === "accept" && "Deal closed"}
+                  {negoResult.decision === "decline" && "Walk away"}
+                  {negoResult.decision === "escalate" && "Needs your call"}
                   <span className="decision-amount">{negoResult.proposedTerms.amount}</span>
                 </div>
                 <h4>Agent&apos;s read</h4>
@@ -468,7 +466,7 @@ export default function Dashboard() {
                 </ul>
                 <h4>Reply (approve to send)</h4>
                 {negoReplySent ? (
-                  <p className="closed-line">✓ Reply sent to {negoReplySent}</p>
+                  <p className="closed-line">Reply sent to {negoReplySent}</p>
                 ) : showNegoSend ? (
                   <SendPanel
                     defaultTo={negoProspect.sentTo}
@@ -489,7 +487,7 @@ export default function Dashboard() {
                     <div className="email-card agreement" style={{ marginBottom: 0 }}>
                       <pre>{negoResult.agreement}</pre>
                       <button className="copy-btn" onClick={() => copy("agreement", negoResult.agreement!)}>
-                        {copied === "agreement" ? "Copied ✓" : "Copy agreement"}
+                        {copied === "agreement" ? "Copied" : "Copy agreement"}
                       </button>
                     </div>
                     <p className="nego-hint" style={{ marginTop: 12 }}>
@@ -511,7 +509,12 @@ export default function Dashboard() {
       </div>
 
       <footer>
-        <div className="container">SponsorPilot. The AI sponsorship broker. Powered by Gemini.</div>
+        <div className="container">
+          <Link href="/">SponsorPilot</Link>
+          <a href="https://github.com/keremtuzun/sponsorpilot" target="_blank" rel="noreferrer">
+            Source on GitHub
+          </a>
+        </div>
       </footer>
     </>
   );
@@ -546,10 +549,10 @@ function ProspectCard({
         <strong>Why they fit:</strong> {p.whyFit}
       </p>
       <p>
-        <strong>Broker&apos;s angle:</strong> {p.pitchAngle}
+        <strong>Angle:</strong> {p.pitchAngle}
       </p>
       {p.sentTo && (
-        <p className="closed-line">✓ Pitch sent to {p.sentTo}</p>
+        <p className="closed-line">Pitch sent to {p.sentTo}</p>
       )}
       {p.stage === "closed" && p.closedAmount && (
         <p className="closed-line">
@@ -569,7 +572,7 @@ function ProspectCard({
         )}
         {(p.stage === "contacted" || p.stage === "negotiating") && (
           <button className="copy-btn primary-btn" onClick={() => onNegotiate(idx)}>
-            Sponsor replied → negotiate
+            Sponsor replied: negotiate
           </button>
         )}
       </div>

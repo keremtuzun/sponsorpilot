@@ -24,38 +24,41 @@ const EMPTY: IntakeForm = {
 
 const STEPS = [
   {
-    title: "List your event, free",
-    desc: "Three minutes: who's coming, what you can offer sponsors, and your floor price. That's the last work you do.",
+    title: "You describe the event",
+    desc: "Attendance, audience, what sponsors can get, your fundraising goal, and the smallest single deal you would accept. That minimum is the floor the negotiation never goes below.",
   },
   {
-    title: "The AI broker goes to work",
-    desc: "It researches sponsors that fit your audience, estimates deal sizes, writes the pitches, and runs the outreach campaign.",
+    title: "Gemini builds the campaign",
+    desc: "It proposes three sponsor packages with prices, writes a short deck, and lists eight to ten companies that fit your audience and country, each with an estimated deal size and a cold email. Company names come from a language model, so check each one exists before you send.",
   },
   {
-    title: "It negotiates. You get funded.",
-    desc: "The agent handles counter-offers against your floor price and drafts the contract the moment a deal closes. Sponsors pay your organization directly.",
+    title: "You send, then paste the replies",
+    desc: "Review each email and send it from your own Gmail, or send it yourself and mark it sent. When a sponsor writes back, paste the reply in. The agent decides whether to accept, counter or walk away, drafts your response, and writes the agreement once a deal closes. Nothing leaves your account until you approve it.",
   },
 ];
 
 const LOADING_MSGS = [
-  "Scanning the sponsor market for your audience…",
-  "Estimating deal sizes per prospect…",
-  "Pricing your sponsorship tiers…",
-  "Writing personalized pitches…",
-  "Assembling your campaign…",
+  "Reading your event details…",
+  "Estimating deal sizes…",
+  "Pricing three packages…",
+  "Writing one email per prospect…",
+  "Putting the campaign together…",
 ];
 
-function Terminal() {
+function Example() {
   return (
-    <div className="terminal rise d2">
-      <div className="terminal-bar">
-        <span>Sample campaign activity</span>
+    <div className="example">
+      <div className="example-title">Example from the sample campaign (HackTheCity Istanbul, floor 15,000)</div>
+      <div className="example-row">
+        <div className="who">Sponsor replies</div>
+        We like the audience, but our budget is 30,000. We would also want to be the only telco at the event, and
+        we need an answer this month.
       </div>
-      <div className="terminal-body">
-        <div className="tl"><span className="pfx">01</span><span><b>8</b> sponsor prospects researched</span></div>
-        <div className="tl"><span className="pfx">02</span><span>A tailored pitch drafted for each</span></div>
-        <div className="tl"><span className="pfx">03</span><span>Counter-offer checked against your minimum</span></div>
-        <div className="tl win"><span className="pfx">04</span><span>Agreement ready for your approval</span></div>
+      <div className="example-row">
+        <div className="who">Broker counters</div>
+        <div className="amount">₺40,000</div>
+        Exclusivity is priced in, not given as a discount. Above the floor, with the branded track, booth and
+        workshop slot kept.
       </div>
     </div>
   );
@@ -106,53 +109,51 @@ export default function Home() {
             Sponsor<span>Pilot</span>
           </div>
           <a className="cta-small" href="#start">
-            List my event, free
+            Describe your event
           </a>
         </nav>
 
         <section className="hero">
           <div className="hero-grid">
             <div>
-              <div className="badge rise">The AI sponsorship broker · free for organizers</div>
-              <h1 className="rise d1">
-                An AI broker that gets your event <em>sponsored.</em>
-              </h1>
-              <p className="sub rise d2">
-                It researches the sponsors, writes the pitches, negotiates the deals, and drafts the
-                contracts. Every deal it closes is yours: sponsors pay your organization
-                directly.
+              <h1>Sponsor outreach and negotiation for events too small for an agency</h1>
+              <p className="sub">
+                You enter your event and the lowest deal you would accept. SponsorPilot uses Gemini to suggest
+                companies that fit, price three sponsor packages, and draft a pitch for each. When a company
+                replies, it proposes a counter-offer that stays above your minimum. Sponsors pay your
+                organization directly.
               </p>
-              <div className="rise d3">
+              <div>
                 <a className="cta" href="#start">
-                  Put the broker to work
+                  Describe your event
                 </a>
-                <p className="fine">Campaign ready in about a minute · No account · Free while in beta</p>
+                <p className="fine">
+                  No account. The campaign lives in this browser tab and is gone when you close it. Generating it
+                  takes up to a minute.
+                </p>
               </div>
             </div>
-            <Terminal />
+            <Example />
           </div>
         </section>
 
         <div className="section-head">
-          <div className="kicker">How it works</div>
-          <h2>What the broker does for you</h2>
-          <p>Sponsorship agencies charge thousands and ignore small events. Your AI broker has one job: closing your deals.</p>
+          <h2>What happens, in order</h2>
         </div>
 
-        <section className="steps">
+        <ol className="steps">
           {STEPS.map((s, i) => (
-            <div className="step" key={i}>
+            <li className="step" key={i}>
               <div className="num">{String(i + 1).padStart(2, "0")}</div>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
-            </div>
+            </li>
           ))}
-        </section>
+        </ol>
 
         <div className="section-head" id="start">
-          <div className="kicker">Start free</div>
-          <h2>List your event</h2>
-          <p>The more specific you are, the better your broker negotiates.</p>
+          <h2>Describe your event</h2>
+          <p>Specific answers give better prospects and tighter counter-offers. Every field marked required is used in the prompt.</p>
         </div>
 
         <section className="form-section">
@@ -267,7 +268,7 @@ export default function Home() {
             </div>
 
             <button className="submit-btn" type="submit" disabled={loading}>
-              {loading ? "Your broker is working…" : "Launch my sponsorship campaign →"}
+              {loading ? "Building your campaign…" : "Build my campaign"}
             </button>
             {loading && (
               <div className="gen-status">
@@ -282,7 +283,10 @@ export default function Home() {
 
       <footer>
         <div className="container">
-          SponsorPilot. The AI sponsorship broker. Free for organizers. Powered by Gemini.
+          <span>SponsorPilot is a Gemini-based project by Kerem Tüzün. Free for organizers.</span>
+          <a href="https://github.com/keremtuzun/sponsorpilot" target="_blank" rel="noreferrer">
+            Source on GitHub
+          </a>
         </div>
       </footer>
     </>

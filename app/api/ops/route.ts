@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { env } from "@/lib/env";
+import { STYLE_RULES } from "@/lib/style";
 import { generateResilient } from "@/lib/gemini";
 import { LEADS } from "@/lib/leads";
 
@@ -119,7 +120,8 @@ YOUR JOB TODAY
 2. Pick the 3 best leads to pitch TODAY (prioritize events whose sponsorship-fundraising window is open now, typically 2-5 months before the event, and leads not yet contacted). Draft the actual outreach message for each, matched to the channel's tone.
 3. Make one concrete growth decision for today with rationale.
 
-Use [link] as the product-link placeholder. Be commercially sharp, not spammy.`;
+Use [link] as the product-link placeholder. Be commercially sharp, not spammy.
+${STYLE_RULES}`;
 
   try {
     const ai = new GoogleGenAI({ apiKey });
