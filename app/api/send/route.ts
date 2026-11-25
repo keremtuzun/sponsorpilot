@@ -39,19 +39,19 @@ export async function POST(req: Request) {
   }
   if (/\[Name\]|\[Contact/i.test(data.body)) {
     return NextResponse.json(
-      { error: "The draft still contains a [Name] placeholder — replace it with the recipient's name before sending." },
+      { error: "The draft still contains a [Name] placeholder. Replace it with the recipient's name before sending." },
       { status: 400 }
     );
   }
 
-  // Google shows App Passwords with spaces — strip them.
+  // Google shows App Passwords with spaces, strip them.
   const user = (data.gmailUser || "").trim() || env("GMAIL_USER");
   const pass = (data.gmailAppPassword || "").replace(/\s+/g, "") || env("GMAIL_APP_PASSWORD");
   if (!user || !pass) {
     return NextResponse.json({ configured: false });
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user)) {
-    return NextResponse.json({ error: "Your Gmail address doesn't look valid — check the sending account." }, { status: 400 });
+    return NextResponse.json({ error: "Your Gmail address doesn't look valid. Check the sending account." }, { status: 400 });
   }
 
   try {
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       auth: { user, pass },
     });
 
-    const fromName = data.orgName ? `${data.orgName} — Sponsorship` : "SponsorPilot";
+    const fromName = data.orgName ? `${data.orgName} Sponsorship` : "SponsorPilot";
     const info = await transporter.sendMail({
       from: `"${fromName.replace(/"/g, "")}" <${user}>`,
       to,
@@ -79,10 +79,10 @@ export async function POST(req: Request) {
     const msg = String(err);
     if (/invalid login|username and password not accepted|EAUTH/i.test(msg)) {
       return NextResponse.json(
-        { error: "Gmail rejected the login — double-check your Gmail address and App Password (it must be an App Password from Google Account → Security → App passwords, not your normal password)." },
+        { error: "Gmail rejected the login. Double-check your Gmail address and App Password (it must be an App Password from Google Account → Security → App passwords, not your normal password)." },
         { status: 502 }
       );
     }
-    return NextResponse.json({ error: "Sending failed — please try again." }, { status: 502 });
+    return NextResponse.json({ error: "Sending failed. Please try again." }, { status: 502 });
   }
 }

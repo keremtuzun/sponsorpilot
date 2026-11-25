@@ -10,7 +10,7 @@ interface Msg {
 export default function SupportWidget() {
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: "agent", text: "Hi! I'm SponsorPilot's AI support agent — ask me anything about campaigns, negotiations, or deals. How can I help?" },
+    { role: "agent", text: "Hi! I'm SponsorPilot's AI support agent, ask me anything about campaigns, negotiations, or deals. How can I help?" },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -36,7 +36,7 @@ export default function SupportWidget() {
       const data = await res.json();
       setMsgs((m) => [...m, { role: "agent", text: data.reply ?? "Sorry, something went wrong." }]);
     } catch {
-      setMsgs((m) => [...m, { role: "agent", text: "Sorry — I hit a snag. Please try again." }]);
+      setMsgs((m) => [...m, { role: "agent", text: "Sorry, I hit a snag. Please try again." }]);
     } finally {
       setBusy(false);
     }

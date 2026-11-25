@@ -24,8 +24,8 @@ const EMPTY: IntakeForm = {
 
 const STEPS = [
   {
-    title: "List your event — free",
-    desc: "3 minutes: who's coming, what you can offer sponsors, and your floor price. That's the last work you do.",
+    title: "List your event, free",
+    desc: "Three minutes: who's coming, what you can offer sponsors, and your floor price. That's the last work you do.",
   },
   {
     title: "The AI broker goes to work",
@@ -52,8 +52,8 @@ function Terminal() {
         <span>Sample campaign activity</span>
       </div>
       <div className="terminal-body">
-        <div className="tl"><span className="pfx">01</span><span><b>214</b> relevant sponsors researched</span></div>
-        <div className="tl"><span className="pfx">02</span><span><b>8</b> tailored partnership pitches drafted</span></div>
+        <div className="tl"><span className="pfx">01</span><span><b>8</b> sponsor prospects researched</span></div>
+        <div className="tl"><span className="pfx">02</span><span>A tailored pitch drafted for each</span></div>
         <div className="tl"><span className="pfx">03</span><span>Counter-offer checked against your minimum</span></div>
         <div className="tl win"><span className="pfx">04</span><span>Agreement ready for your approval</span></div>
       </div>
@@ -93,7 +93,7 @@ export default function Home() {
       sessionStorage.setItem("sponsorpilot_form", JSON.stringify(form));
       router.push("/dashboard");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong — please try again.");
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setLoading(false);
     }
   }
@@ -106,7 +106,7 @@ export default function Home() {
             Sponsor<span>Pilot</span>
           </div>
           <a className="cta-small" href="#start">
-            List my event — free
+            List my event, free
           </a>
         </nav>
 
@@ -119,14 +119,14 @@ export default function Home() {
               </h1>
               <p className="sub rise d2">
                 It researches the sponsors, writes the pitches, negotiates the deals, and drafts the
-                contracts — like an agent that works for you. Every deal it closes is yours: sponsors
-                pay your organization directly.
+                contracts. Every deal it closes is yours: sponsors pay your organization
+                directly.
               </p>
               <div className="rise d3">
                 <a className="cta" href="#start">
                   Put the broker to work
                 </a>
-                <p className="fine">Campaign live in ~30 seconds · No account · Free while in beta</p>
+                <p className="fine">Campaign ready in about a minute · No account · Free while in beta</p>
               </div>
             </div>
             <Terminal />
@@ -135,7 +135,7 @@ export default function Home() {
 
         <div className="section-head">
           <div className="kicker">How it works</div>
-          <h2>Your fundraising team, minus the team</h2>
+          <h2>What the broker does for you</h2>
           <p>Sponsorship agencies charge thousands and ignore small events. Your AI broker has one job: closing your deals.</p>
         </div>
 
@@ -282,7 +282,7 @@ export default function Home() {
 
       <footer>
         <div className="container">
-          SponsorPilot — the AI sponsorship broker. Free for organizers. Powered by Gemini.
+          SponsorPilot. The AI sponsorship broker. Free for organizers. Powered by Gemini.
         </div>
       </footer>
     </>

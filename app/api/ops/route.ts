@@ -6,9 +6,9 @@ import { LEADS } from "@/lib/leads";
 
 export const maxDuration = 120;
 
-// Growth agent: hit daily by Cloud Scheduler. Reviews business metrics and the
+// Growth agent: hit daily by Vercel Cron. Reviews business metrics and the
 // lead list, decides who to pitch today, drafts the outreach, and logs one
-// growth decision. Every run is logged to stdout -> Cloud Run production logs.
+// growth decision. Every run is logged to stdout -> Vercel runtime logs.
 
 const opsSchema = {
   type: Type.OBJECT,
@@ -51,21 +51,21 @@ const DEMO_OPS = {
       why: "October event means sponsorship outreach is happening right now; Turkish market where we have testimonials.",
       channel: "Email",
       outreachMessage:
-        "Hi — I saw TEDxYouth Ankara is coming up in October. SponsorPilot is a free AI broker that finds sponsors for student events, pitches them, and negotiates the deals for you. Built by student organizers who raised sponsorship for their own conference the hard way. Listing takes 3 minutes: [link].",
+        "Hi, I saw TEDxYouth Ankara is coming up in October. SponsorPilot is a free AI broker that finds sponsors for student events, pitches them, and negotiates the deals for you. Built by student organizers who raised sponsorship for their own conference the hard way. Listing takes 3 minutes: [link].",
     },
     {
       lead: "Cambridge Schools Debate Open",
       why: "October event, English-speaking market, debate circuit is dense with organizers who refer each other.",
       channel: "Email",
       outreachMessage:
-        "Hi — running sponsorship for a schools debate open is brutal without an agency. SponsorPilot is a free AI broker: it finds the sponsors, pitches them, and negotiates the deal for you. Built by student organizers, for student organizers: [link]",
+        "Hi, running sponsorship for a schools debate open is brutal without an agency. SponsorPilot is a free AI broker: it finds the sponsors, pitches them, and negotiates the deal for you. Built by student organizers, for student organizers: [link]",
     },
     {
       lead: "HackHighSchool NYC",
       why: "Hackathons have the highest sponsorship budgets per attendee; October timing is urgent.",
       channel: "Discord",
       outreachMessage:
-        "hey! saw you're organizing HackHighSchool for October — if sponsor outreach is still on the todo list, we built a free AI broker that finds sponsors, pitches them, and negotiates deals for you. 3 min to list: [link]",
+        "hey! saw you're organizing HackHighSchool for October, if sponsor outreach is still on the todo list, we built a free AI broker that finds sponsors, pitches them, and negotiates deals for you. 3 min to list: [link]",
     },
   ],
   growthDecision: {
@@ -79,8 +79,8 @@ export async function GET(req: Request) {
   const secret = env("OPS_SECRET");
   if (secret) {
     // Accept ?key= (manual runs) or the Bearer header Vercel Cron sends when
-    // CRON_SECRET is set. Sanitize both sides — env values from Windows shells
-    // can carry a BOM, which arrives in headers as either ﻿ or "ï»¿".
+    // CRON_SECRET is set. Sanitize both sides, env values from Windows shells
+    // can carry a BOM, which arrives in headers as either U+FEFF or the three-character "ï»¿" form.
     const clean = (s: string | null) =>
       (s || "").replace(new RegExp("^(\\uFEFF|\\u00EF\\u00BB\\u00BF)+"), "").trim();
     const bearer = clean(req.headers.get("authorization")).replace(/^Bearer\s+/i, "");
@@ -116,7 +116,7 @@ ${LEADS.map((l) => `- ${l.name} | ${l.type} | ${l.country} | event: ${l.eventMon
 
 YOUR JOB TODAY
 1. Write a short daily ops report.
-2. Pick the 3 best leads to pitch TODAY (prioritize events whose sponsorship-fundraising window is open now — typically 2-5 months before the event — and leads not yet contacted). Draft the actual outreach message for each, matched to the channel's tone.
+2. Pick the 3 best leads to pitch TODAY (prioritize events whose sponsorship-fundraising window is open now, typically 2-5 months before the event, and leads not yet contacted). Draft the actual outreach message for each, matched to the channel's tone.
 3. Make one concrete growth decision for today with rationale.
 
 Use [link] as the product-link placeholder. Be commercially sharp, not spammy.`;
@@ -128,7 +128,7 @@ Use [link] as the product-link placeholder. Be commercially sharp, not spammy.`;
       config: { responseMimeType: "application/json", responseSchema: opsSchema, temperature: 0.7 },
     });
     const plan = JSON.parse(response.text ?? "");
-    // stdout -> Cloud Run logs = auditable evidence the agent runs the business.
+    // stdout -> Vercel runtime logs = auditable evidence the agent runs the business.
     console.log("[sponsorpilot:ops] run", JSON.stringify({ metrics, plan }));
     return NextResponse.json({ metrics, ...plan });
   } catch (err) {

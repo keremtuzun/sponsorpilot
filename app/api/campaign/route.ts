@@ -7,7 +7,7 @@ import type { Campaign, IntakeForm } from "@/lib/types";
 
 export const maxDuration = 120;
 
-// Broker agent, step 1: turn an event listing into a full brokerage campaign —
+// Broker agent, step 1: turn an event listing into a full brokerage campaign , 
 // strategy, tiers, deck, and researched prospects with ready-to-send outreach.
 
 const campaignSchema = {
@@ -70,7 +70,7 @@ const campaignSchema = {
 };
 
 function buildPrompt(f: IntakeForm): string {
-  return `You are SponsorPilot, an autonomous AI sponsorship broker. You represent event organizers — your only job is getting them funded, so every prospect and email must be commercially real, not filler.
+  return `You are SponsorPilot, an autonomous AI sponsorship broker. You represent event organizers, your only job is getting them funded, so every prospect and email must be commercially real, not filler.
 
 A new client just listed their event. Build the full brokerage campaign.
 
@@ -128,6 +128,6 @@ export async function POST(req: Request) {
     return NextResponse.json(campaign);
   } catch (err) {
     console.error("[sponsorpilot:broker] campaign failed", err);
-    return NextResponse.json({ error: "Campaign creation failed — please try again." }, { status: 502 });
+    return NextResponse.json({ error: "Campaign creation failed. Please try again." }, { status: 502 });
   }
 }

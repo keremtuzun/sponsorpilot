@@ -3,7 +3,7 @@ import "./globals.css";
 import SupportWidget from "./support-widget";
 
 export const metadata: Metadata = {
-  title: "SponsorPilot — The AI sponsorship broker",
+  title: "SponsorPilot: the AI sponsorship broker",
   description:
     "An autonomous AI broker that gets your event sponsored: it researches the sponsors, writes the pitches, negotiates the deals, and drafts the contracts. Free for organizers.",
 };
