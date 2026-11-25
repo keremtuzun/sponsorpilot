@@ -206,7 +206,7 @@ export default function Home() {
               </div>
               <div className="field">
                 <label>Your name</label>
-                <input required value={form.contactName} onChange={set("contactName")} placeholder="e.g. Kerem T." />
+                <input required value={form.contactName} onChange={set("contactName")} placeholder="e.g. Ayşe K." />
               </div>
             </div>
 
@@ -283,10 +283,7 @@ export default function Home() {
 
       <footer>
         <div className="container">
-          <span>SponsorPilot is a Gemini-based project by Kerem Tüzün. Free for organizers.</span>
-          <a href="https://github.com/keremtuzun/sponsorpilot" target="_blank" rel="noreferrer">
-            Source on GitHub
-          </a>
+          <span>SponsorPilot uses Gemini to draft sponsor outreach. Free for organizers.</span>
         </div>
       </footer>
     </>

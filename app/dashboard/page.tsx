@@ -511,9 +511,6 @@ export default function Dashboard() {
       <footer>
         <div className="container">
           <Link href="/">SponsorPilot</Link>
-          <a href="https://github.com/keremtuzun/sponsorpilot" target="_blank" rel="noreferrer">
-            Source on GitHub
-          </a>
         </div>
       </footer>
     </>
